@@ -7,3 +7,5 @@ my_program:main.o sudoku.o
 	gcc -o my_program main.o sudoku.o
 run:my_program
 	./my_program
+clean:
+	rm *.o
