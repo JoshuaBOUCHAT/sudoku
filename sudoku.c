@@ -68,7 +68,7 @@ void from_grid(sudoku *s, int grid[9][9])
 }
 inline int get_available_repr(sudoku *s, int x, int y)
 {
-    return (~s->row_usage[x]) & (~s->col_usage[y]) & (~s->grid_usage[x / 3 * 3 + y / 3]) & 0b1111111110;
+    return (~s->row_usage[x]) & (~s->col_usage[y]) & (~s->grid_usage[x / 3 * 3 + y / 3]) & 1022;
 }
 int solve_at(sudoku *s, int x, int y)
 {

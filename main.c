@@ -14,7 +14,7 @@ int grid[9][9] = {
     {0, 0, 8, 5, 0, 0, 0, 1, 0},
     {0, 9, 0, 0, 0, 0, 4, 0, 0}};
 
-int main(int argc, char const *argv[])
+int main(void)
 {
     sudoku s;
     init_sudoku(&s);
