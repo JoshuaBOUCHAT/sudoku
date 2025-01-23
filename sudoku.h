@@ -10,7 +10,6 @@ typedef struct _sudoku
 } sudoku;
 
 void init_sudoku(sudoku *s);
-void is_available(sudoku *s, int x, int y, int val);
 void display_sudoku(sudoku *s);
 void from_grid(sudoku *s, int grid[9][9]);
 int get_available_repr(sudoku *s, int x, int y);

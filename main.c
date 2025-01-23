@@ -1,5 +1,8 @@
 #include "sudoku.h"
 #include <stdio.h>
+#include <string.h>
+#include <time.h>
+
 int grid[9][9] = {
     {8, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 3, 6, 0, 0, 0, 0, 0},
@@ -16,19 +19,16 @@ int main(int argc, char const *argv[])
     sudoku s;
     init_sudoku(&s);
     from_grid(&s, grid);
-    display_sudoku(&s);
-    for (int i = 8; i < 9; i++)
+    clock_t start = clock();
+    for (int i = 0; i < 10000; i++)
     {
-        int x = i / 9;
-        int y = i % 9;
-        printf("%d %d:  %b %b %b %b\n", x, y, ~s.row_usage[x] & 1022, ~s.col_usage[y] & 1022, ~s.grid_usage[x / 3 * 3 + y / 3] & 1022, get_available_repr(&s, x, y));
+
+        sudoku test;
+        memcpy(&test, &s, sizeof(sudoku));
+        solve(&test);
     }
-    printf("repre 0:8    %d", get_available_repr(&s, 0, 8));
-    int res = solve(&s);
-
-    printf("Solving status:%d \n", res);
-
-    display_sudoku(&s);
+    clock_t elasped = 1000.0 * (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+    printf("Time to compute: %ld", elasped);
 
     return 0;
 }
