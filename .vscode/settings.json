@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "sudoku.h": "c",
+        "string.h": "c",
+        "stdio.h": "c"
+    }
+}
