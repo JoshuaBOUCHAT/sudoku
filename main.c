@@ -19,6 +19,7 @@ int grid[9][9] = {
     {0, 5, 0, 0, 0, 7, 0, 0, 0},
     {0, 0, 0, 0, 4, 5, 7, 0, 0},
     {0, 0, 0, 1, 0, 0, 0, 3, 0},
+
     {0, 0, 1, 0, 0, 0, 0, 6, 8},
     {0, 0, 8, 5, 0, 0, 0, 1, 0},
     {0, 9, 0, 0, 0, 0, 4, 0, 0}};
@@ -28,9 +29,10 @@ char *test = "050703060007000800000816000000030000005000100730040086906000204840
 int main(void)
 {
     double start = omp_get_wtime();
-    solve_all("./sudoku-exchange-puzzle-bank/easy.txt");
-    solve_all("./sudoku-exchange-puzzle-bank/hard.txt");
-    solve_all("./sudoku-exchange-puzzle-bank/diabolical.txt");
+    solve_all("./easy.txt");
+    solve_all("./hard.txt");
+    solve_all("./diabolical.txt");
+    solve_all("./medium.txt");
     double end = omp_get_wtime() - start;
     printf("total time to compute is: %fs\n", end);
 
@@ -50,7 +52,7 @@ void solve_all(char *path)
     int k = 0;
     while ((k = read(fd, buffer, SIZE * 100)) == SIZE * 100)
     {
-#pragma omp parallel for
+#pragma omp parallel for schedule(static)
         for (int i = 0; i < SIZE; i++)
         {
             sudoku s = {
