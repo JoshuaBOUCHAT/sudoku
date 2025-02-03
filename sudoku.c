@@ -1,19 +1,6 @@
 #include "sudoku.h"
 #include <stdio.h>
 
-void init_sudoku(sudoku *s)
-{
-    for (int i = 0; i < 9; i++)
-    {
-        for (int j = 0; j < 9; j++)
-        {
-            s->board[i][j] = 0;
-        }
-        s->col_usage[i] = 0;
-        s->grid_usage[i] = 0;
-        s->row_usage[i] = 0;
-    }
-}
 void add_change(sudoku *s, int x, int y, char val)
 {
     s->board[x][y] = val;
@@ -54,18 +41,6 @@ void display_sudoku(sudoku *s)
     }
     printf("-------------------------------\n");
 }
-void from_grid(sudoku *s, int grid[9][9])
-{
-    for (int i = 0; i < 9; i++)
-    {
-        for (int j = 0; j < 9; j++)
-        {
-            char val = grid[i][j];
-            if (val)
-                add_change(s, i, j, val);
-        }
-    }
-}
 inline short get_available_repr(sudoku *s, int x, int y)
 {
     return (~s->row_usage[x]) & (~s->col_usage[y]) & (~s->grid_usage[x / 3 * 3 + y / 3]) & 1022;
@@ -103,17 +78,22 @@ int solve(sudoku *s)
     return solve_at(s, 0, 0);
 }
 
-inline void from_string(sudoku *s, char *str)
+sudoku from_string(char *str)
 {
+    sudoku s = {
+        .col_usage = {0},
+        .grid_usage = {0},
+        .row_usage = {0}};
     for (int i = 0; i < 9; i++)
     {
         for (int j = 0; j < 9; j++)
         {
             char val = str[i * 9 + j] - '0';
             if (val != 0)
-                add_change(s, i, j, val);
+                add_change(&s, i, j, val);
         }
     }
+    return s;
 }
 /*typedef struct _stack_data
  {

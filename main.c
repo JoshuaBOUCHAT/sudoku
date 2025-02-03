@@ -12,27 +12,15 @@
 
 void solve_all(char *path);
 
-int grid[9][9] = {
-    {8, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, 0, 3, 6, 0, 0, 0, 0, 0},
-    {0, 7, 0, 0, 9, 0, 2, 0, 0},
-    {0, 5, 0, 0, 0, 7, 0, 0, 0},
-    {0, 0, 0, 0, 4, 5, 7, 0, 0},
-    {0, 0, 0, 1, 0, 0, 0, 3, 0},
-
-    {0, 0, 1, 0, 0, 0, 0, 6, 8},
-    {0, 0, 8, 5, 0, 0, 0, 1, 0},
-    {0, 9, 0, 0, 0, 0, 4, 0, 0}};
-
 char *test = "050703060007000800000816000000030000005000100730040086906000204840572093000409000";
 
 int main(void)
 {
     double start = omp_get_wtime();
-    solve_all("./easy.txt");
-    solve_all("./hard.txt");
-    solve_all("./diabolical.txt");
-    solve_all("./medium.txt");
+    solve_all("./banque/easy.txt");
+    solve_all("./banque/hard.txt");
+    solve_all("./banque/diabolical.txt");
+    solve_all("./banque/medium.txt");
     double end = omp_get_wtime() - start;
     printf("total time to compute is: %fs\n", end);
 
@@ -55,11 +43,7 @@ void solve_all(char *path)
 #pragma omp parallel for schedule(static)
         for (int i = 0; i < SIZE; i++)
         {
-            sudoku s = {
-                .col_usage = {0},
-                .grid_usage = {0},
-                .row_usage = {0}};
-            from_string(&s, buffer + (i * 100 + 13));
+            sudoku s = from_string(buffer + (i * 100 + 13));
             solve(&s);
         }
     }
@@ -74,8 +58,7 @@ void solve_all(char *path)
 #pragma omp parallel for
         for (int i = 0; i < len; i++)
         {
-            sudoku s;
-            from_string(&s, buffer + (i * 100 + 13));
+            sudoku s = from_string(buffer + (i * 100 + 13));
             solve(&s);
         }
     }

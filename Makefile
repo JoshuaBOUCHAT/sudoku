@@ -1,14 +1,15 @@
+CFLAGS = -fopenmp -O3 -Wall -Wextra -Werror -pedantic
 
+my_program:build build/main.o build/sudoku.o
+	gcc $(CFLAGS) -o my_program build/main.o build/sudoku.o
+build/sudoku.o:build sudoku.c
+	gcc $(CFLAGS) -c sudoku.c -o build/sudoku.o
+build/main.o:build main.c
+	gcc $(CFLAGS) -c main.c -o build/main.o
 
-
-sudoku.o:sudoku.c
-	gcc -fopenmp -O3 -Wall -Wextra -Werror -pedantic -c sudoku.c -o sudoku.o
-main.o:main.c
-	gcc -fopenmp -O3 -Wall -Wextra -Werror -pedantic -c main.c -o main.o
-
-my_program:main.o sudoku.o
-	gcc -fopenmp -O3 -Wall -Wextra -Werror -pedantic -o my_program main.o sudoku.o
+build:
+	mkdir build
 run:my_program
 	./my_program
 clean:
-	rm *.o
+	rm build/*.o
