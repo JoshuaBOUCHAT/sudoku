@@ -41,10 +41,6 @@ void display_sudoku(sudoku *s)
     }
     printf("-------------------------------\n");
 }
-inline short get_available_repr(sudoku *s, int x, int y)
-{
-    return (~s->row_usage[x]) & (~s->col_usage[y]) & (~s->grid_usage[x / 3 * 3 + y / 3]) & 1022;
-}
 
 int solve_at(sudoku *s, int x, int y)
 {

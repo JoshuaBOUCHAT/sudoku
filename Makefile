@@ -12,4 +12,4 @@ build:
 run:my_program
 	./my_program
 clean:
-	rm build/*.o
+	rm -rf build/ && rm my_program 
